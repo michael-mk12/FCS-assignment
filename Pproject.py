@@ -42,15 +42,15 @@ def view_driver():
                 0:{
                 "ID":1,
                 "name":"Max verstappen",
-                "location":"akkar","destination":"",},
+                "location":"beirut","destination":"jounieh",},
                 1:{
                 "ID":2,
                 "name":"Lewis Hamilton",
-                "location":"Saida","destination":"",},
+                "location":"sidon","destination":"tyre",},
                 2:{
                 "ID":3,
                 "name":"Daniel Ricciardo",
-                "location":"Jbeil","destination":"",
+                "location":"tripoli","destination":"hermel",
                   },
                 }
    for i in range(len(RyanGosling)):
@@ -79,14 +79,22 @@ def add_driver():
                 print("Invalid input, please try again.")
                 print("y/n")      
 def show_cities():
-   RyanGosling =view_driver()
-
-   
-running = True
-while running:
-    print("Hello please enter the following: ")
-    print("1.To go to the driver's menu.")
-    print("2.to go to the citie's menu.")
-    print("3.to exit ")
-    running = main_menu()
-
+  x=[33.8,33,5,34.4]
+  y=[35.4,35.3,35.8]
+  x1=[33.9,33.2,34.3]
+  y2=[35.6,35.2,36.3]
+  max_x=34.6
+  max_y=36
+# failsafe = True
+# while failsafe:
+#     print("Hello please enter the following: ")
+#     print("1.To go to the driver's menu.")
+#     print("2.to go to the citie's menu.")
+#     print("3.to exit ")
+#     failsafe = main_menu()
+z=1
+w= view_driver()
+for i in range(len(w)):
+  if w[i]["destination"]:
+     if w[i]["destination"]["x"] == z:
+      print("done ")
