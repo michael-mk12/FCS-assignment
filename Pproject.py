@@ -18,9 +18,9 @@ cities2=[]
 for i in range(len(RyanGosling)):
       cities1.append(RyanGosling[i]["location"])
       cities2.append(RyanGosling[i]["destination"])
-start={1:{"x":33.8,"y":35.4},
-         2:{"x":33.5,"y":35.3},
-         3:{"x":33.9,"y":36.8},
+start={0:{"x":33.8,"y":35.4},
+         1:{"x":33.5,"y":35.3},
+         2:{"x":33.9,"y":36.8},
          }
 end={0:{"x":33.9,"y":35.6},
        1:{"x":33.2,"y":35.2},
@@ -43,7 +43,6 @@ def main_menu():
           print("1.To go to the driver's menu.")
           print("2.to go to the citie's menu.")
           print("3.to exit ")
-
 def city_menu():
     FaileSafe=True  
     print("Welcome to the city's menu enter the following: ")
@@ -72,7 +71,8 @@ def driver_menu():
   print("Welcome to the drivers menu enter the following: ")
   print("1.To go to view all the  driver's.")
   print("2.to add a driver.")
-  print("3.to go back to the main menu.")
+  print("3.to check which drivers go to where you want")
+  print("4.to go back to the main menu..")
   while FaileSafe:
       print("------Driver menu------")
       user_info = input("Enter your choice: ")
@@ -81,7 +81,9 @@ def driver_menu():
       elif user_info=="2":
         add_driver()
       elif user_info =="3":
-         return False
+         driver_to_location()
+      elif user_info =="4":
+          return False
       else:
           print("Invalid input, please try again.")
           print("1.To go to view all the  driver's.")
@@ -122,7 +124,6 @@ def show_city():
    global cities1, cities2
    print("All cities are:  ",cities1, cities2)
    return cities1, cities2
-
 def add_city():
    global cities2, cities1
    failSafe = True
@@ -186,25 +187,18 @@ def check_diliver():
   else:
      print("Error accured going to main menu")
      main_menu()
-# def driver_to_location():
-#     global start, end
-#     print("add the location of the starting location ")
-#     stx=int(input("Enter the altitude of the city (max is 34.6 min is 33.1)"))
-#     sty=int(input("Enter the latitude of the city (max is 36 min is 35.1)"))
-#     print("add the location of the ending location")
-#     for i in range(len(start)):
-#       if stx in start[i]["x"] and sty in start[i]["y"]:
-#         print(f"The driver with ID {i+1} can get to the city from {start[i]['x']},{start[i]["y"]}")
-# failsafe = True
-# while failsafe:
-#     print("Hello please enter the following: ")
-#     print("1.To go to the driver's menu.")
-#     print("2.to go to the citie's menu.")
-#     print("3.to exit ")
-#     failsafe = main_menu()
-  # for i in range(1,4):
-  #   if start[i]["x"]<=max_x and start[i]["x"]>=min_x and start[i]["y"]<=max_y and start[i]["y"]>=min_y and end[i]["x"]<=max_x and end[i]["x"]>=min_x and end[i]["y"]<=max_y and end[i]["y"]>=min_y:
-  #     print(f"The driver with ID {i} can get to the city from {start[i]['x']},{start[i]['y']} to {end[i]['x']},{end[i]['y']}")
-  #   else:
-  #     print(f"The driver with ID {i} can not get to the city from {start[i]['x']},{start[i]['y']} to {end[i]['x']},{end[i]['y']}")
-main_menu()
+def driver_to_location():
+  global start, end,cities2
+  print("these are the drivers that can get to these postions")
+  for i in start:
+     if start[i]["x"]-end[i]["x"]<0.3 or start[i]["y"]-end[i]["y"]<0.3:
+      print(f"The driver with ID {i+1} can get to the city{cities1} from {start[i]['x']},{start[i]['y']} which is {cities2[i]}") 
+     else:
+            print(f"The driver with ID {i+1} can't get to the city {cities1} from {start[i]['x']},{start[i]['y']} which is {cities2[i]}")
+failsafe = True
+while failsafe:
+    print("Hello please enter the following: ")
+    print("1.To go to the driver's menu.")
+    print("2.to go to the citie's menu.")
+    print("3.to exit ")
+    failsafe = main_menu()
