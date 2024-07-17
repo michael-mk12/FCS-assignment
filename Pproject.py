@@ -18,6 +18,14 @@ cities2=[]
 for i in range(len(RyanGosling)):
       cities1.append(RyanGosling[i]["location"])
       cities2.append(RyanGosling[i]["destination"])
+start={1:{"x":33.8,"y":35.4},
+         2:{"x":33.5,"y":35.3},
+         3:{"x":33.9,"y":36.8},
+         }
+end={0:{"x":33.9,"y":35.6},
+       1:{"x":33.2,"y":35.2},
+       2:{"x":34.3,"y":36.2},
+       }
 def main_menu():
   FaileSafe=True  
   while FaileSafe:
@@ -102,14 +110,14 @@ def add_driver():
               }
               RyanGosling[len(RyanGosling)] = new_driver
               print(RyanGosling)
+              cities1.append(new_driver_info_3) 
+              cities2.append(new_driver_info_4)
+              check_diliver()
             elif user_1.lower() == "n":
                 faileSafe = False
-                print("Returning to the main menu")
             else:
                 print("Invalid input, please try again.")
                 print("y/n")
-    cities1.append(new_driver_info_3) 
-    cities2.append(new_driver_info_4)
 def show_city():
    global cities1, cities2
    print("All cities are:  ",cities1, cities2)
@@ -122,11 +130,11 @@ def add_city():
     user1=input("Do you wish to add a city y/n")
     if user1.lower() == "y":
         new_city=input("Enter the city name: ")
-        if new_city in cities1 or cities2:
+        if new_city == cities1 or new_city == cities2 :
             print("City already exists")
             add_city()
         cities1.append(new_city)
-        print(q)
+        check_diliver()
     elif user1.lower() == "n":
         failSafe = False
         print("Returning to the main menu")
@@ -135,21 +143,58 @@ def add_city():
     else:
         print("Invalid input, please try again.")
         print("y/n")
-      
 def check_diliver():
-  start={1:{"x":33.8,"y":35.4},
-         2:{"x":33.5,"y":35.3},
-         3:{"x":33.4,"y":35.8},
-         }
-  end={1:{"x":33.9,"y":35.6},
-       2:{"x":33.2,"y":35.2},
-       3:{"x":34.3,"y":36.2},
-       }
-  max_x=34.6
+  global start,end
+  max_x=36
   max_y=36
   min_x=33.1
-  min_y=35.1
-
+  min_y=33.1
+  print("add the location of the starting location ")
+  stx=float(input("Enter the altitude of the city (max is 36 min is 33.1)"))
+  sty=float(input("Enter the latitude of the city (max is 36 min is 33.1)"))
+  print("add the location of the ending location")
+  stx1=float(input("Enter the altitude of the destination of the city (max is 36.6 min is 33.1)"))
+  sty1=float(input("Enter the latitude of the destination city (max is 36 min is 33.1)"))
+  sum1=stx-stx1
+  sum2= sty-sty
+  if sum1 <= 0.3 or sum2<=0.3:
+    if stx > max_x or sty < min_x or sty > max_y or sty<min_y:
+      print("Invalid altitude, please enter the altitude within the range (max is 34.6)")
+      check_diliver()
+    else:
+      for i in start:
+        if stx == start[i]["x"] or sty == start[i]["y"]:
+            print("this location alreadt exists")
+            check_diliver()
+      newcity={"x":stx,"y":sty}
+      start[len(start)]=newcity
+      if stx1 > max_x or stx1 < min_x or sty1 > max_y or sty1 < min_y:
+        print("Invalid altitude, please enter the altitude within the range (max is 34.6)")
+        check_diliver()
+      else:
+        for i in end:
+          if stx1 == end[i]["x"] or sty1 == end[i]["y"]:
+              print("this location alreadt exists")
+              check_diliver()
+        newcity1={"x":stx1,"y":sty1}
+        end[len(end)]=newcity1
+      print("The new cities and their coordinates are: ")
+      show_city()
+  elif sum1< 0.3 or sum2<0.3:
+     print("its to far away to diliver it can't reach")
+     check_diliver()
+  else:
+     print("Error accured going to main menu")
+     main_menu()
+# def driver_to_location():
+#     global start, end
+#     print("add the location of the starting location ")
+#     stx=int(input("Enter the altitude of the city (max is 34.6 min is 33.1)"))
+#     sty=int(input("Enter the latitude of the city (max is 36 min is 35.1)"))
+#     print("add the location of the ending location")
+#     for i in range(len(start)):
+#       if stx in start[i]["x"] and sty in start[i]["y"]:
+#         print(f"The driver with ID {i+1} can get to the city from {start[i]['x']},{start[i]["y"]}")
 # failsafe = True
 # while failsafe:
 #     print("Hello please enter the following: ")
